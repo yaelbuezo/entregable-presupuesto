@@ -1,12 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
   <script src="main.js"></script>
-  <title>Primer entrega</title>
+  <title>Presupuesto semanal</title>
 </head>
 <body>
-  <h3>Presupuesto semanal</h3>
+  <div class="container">
+    <header>
+      <h1 class="text-center">Presupuesto semanal</h1>
+    </header>
+    <section>
+      <!-- agregar gasto -->
+      <div class="row">
+        <div class="col">
+          <div class="contenido">
+            <h3 class="text-center">Agregue sus gastos</h3>
+            <form id="agregar-gasto">
+              <div class="form-group">
+                <label for="nombre">Gasto</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Indique su gasto">
+              </div>
+              <div class="form-group">
+                <label for="monto">Monto</label>
+                <input type="text" class="form-control" id="monto" placeholder="Indique el monto gastado">
+              </div>
+              <button type="submit" class="btn btn-outline-secondary">Agregar</button>
+              <p class="text-center restante">Su presupuesto restante es de $ <span id="restante"></span></p>
+            </form>
+          </div>
+        </div>
+        <!-- gastado -->
+        <div class="col">
+          <div class="contenido">
+            <h3 class="text-center">Gastos</h3>
+            <p class="text-center">Su presupuesto inicial es de $ <span id="presupuesto"></span></p>
+            <div class="gastado">
+              <ul class="list-group"></ul>
+            </div>
+            <div class="total-gastado text-center">
+              <h5>Total gastado $ <span id="total"></span></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </body>
 </html>
