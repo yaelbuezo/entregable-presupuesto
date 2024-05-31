@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <script src="main.js"></script>
-  <title>Presupuesto semanal</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Presupuesto Semanal</title>
 </head>
 <body>
   <div class="container">
@@ -14,7 +13,6 @@
       <h1 class="text-center">Presupuesto semanal</h1>
     </header>
     <section>
-      <!-- agregar gasto -->
       <div class="row">
         <div class="col">
           <div class="contenido">
@@ -29,25 +27,26 @@
                 <input type="text" class="form-control" id="monto" placeholder="Indique el monto gastado">
               </div>
               <button type="submit" class="btn btn-outline-secondary">Agregar</button>
-              <p class="text-center restante">Su presupuesto restante es de $ <span id="restante"></span></p>
+              <p class="text-center restante">Su presupuesto restante es de $<span id="restante"></span></p>
             </form>
           </div>
         </div>
-        <!-- gastado -->
         <div class="col">
           <div class="contenido">
             <h3 class="text-center">Gastos</h3>
-            <p class="text-center">Su presupuesto inicial es de $ <span id="presupuesto"></span></p>
+            <p class="text-center">Su presupuesto inicial es de $<span id="inicial"></span></p>
             <div class="gastado">
-              <ul class="list-group"></ul>
+              <ul id="lista-gastos" class="list-group"></ul>
             </div>
             <div class="total-gastado text-center">
-              <h5>Total gastado $ <span id="total"></span></h5>
+              <h5>Total gastado $<span id="total"></span></h5>
             </div>
           </div>
         </div>
       </div>
     </section>
   </div>
+
+  <script src="main.js"></script>
 </body>
 </html>
