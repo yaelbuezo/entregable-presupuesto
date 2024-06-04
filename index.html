@@ -15,7 +15,7 @@
     <section>
       <div class="row">
         <div class="col">
-          <div class="contenido">
+          <div class="contenido left">
             <h3 class="text-center">Agregue sus gastos</h3>
             <form id="agregar-gasto">
               <div class="form-group">
@@ -26,17 +26,22 @@
                 <label for="monto">Monto</label>
                 <input type="text" class="form-control" id="monto" placeholder="Indique el monto gastado">
               </div>
-              <button type="submit" class="btn btn-outline-secondary">Agregar</button>
+              <div class="text-center mt-3">
+                <button type="submit" class="btn btn-outline-secondary">Agregar</button>
+              </div>
               <p class="text-center restante">Su presupuesto restante es de $<span id="restante"></span></p>
             </form>
           </div>
         </div>
         <div class="col">
-          <div class="contenido">
+          <div class="contenido right">
             <h3 class="text-center">Gastos</h3>
             <p class="text-center">Su presupuesto inicial es de $<span id="inicial"></span></p>
             <div class="gastado">
               <ul id="lista-gastos" class="list-group"></ul>
+            </div>
+            <div class="text-center mt-3">
+              <button type="reset" class="btn btn-reset btn-outline-danger">Borrar</button>
             </div>
             <div class="total-gastado text-center">
               <h5>Total gastado $<span id="total"></span></h5>
@@ -47,6 +52,7 @@
     </section>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="main.js"></script>
 </body>
 </html>

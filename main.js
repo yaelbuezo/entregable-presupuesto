@@ -1,27 +1,50 @@
 // pedir presupuesto
 let presupuesto
 function pedirPresupuesto() {
-  presupuesto = prompt('¿Cuál es su presupuesto esta semana?')
-  while (isNaN(presupuesto) || presupuesto <= 0) {
-    alert('El monto ingresado es inválido. Por favor, ingresar un valor numérico.')
-    presupuesto = prompt('¿Cuál es su presupuesto esta semana?')
-  }
+  Swal.fire({
+    title: "¿Cuál es su presupuesto esta semana?",
+    icon: "question",
+    html: `
+      <input
+        type="number"
+        placeholder="Presupuesto"
+        class="swal2-input">
+    `,
+    showCancelButton: false,
+    confirmButtonText: "Aceptar",
+    preConfirm: () => {
+      const inputValue = Swal.getPopup().querySelector('input').value;
+      if (!inputValue || inputValue <= 0) {
+        Swal.showValidationMessage("Por favor, ingrese un valor numérico válido.");
+      }
+      return inputValue;
+    }
+  }).then(result => {
+    if (result.isConfirmed) {
+      presupuesto = parseFloat(result.value);
+      Swal.fire("Presupuesto ingresado", `Su presupuesto esta semana es: $${presupuesto}`, "success")
+      .then(() => {
+        mostrarPresupuesto();
+      });
+    }
+  });
 }
 
 // imprimir presupuesto
-document.addEventListener("DOMContentLoaded", function() { 
-  pedirPresupuesto()
+function mostrarPresupuesto() {
   const presupuestoInicial = document.getElementById('inicial');
   presupuestoInicial.innerHTML = `${presupuesto}`;
+}
+document.addEventListener("DOMContentLoaded", function() { 
+  pedirPresupuesto()
 });
-
 
 // agregar gasto
 let total = 0;
 const form = document.querySelector('#agregar-gasto')
 
-function limpiarForm() {
-  form.reset();
+function limpiarForm() { 
+  form.reset(); 
 }
 
 form.addEventListener('submit', e => {
@@ -31,10 +54,10 @@ form.addEventListener('submit', e => {
   const monto = Number(document.querySelector('#monto').value);
   
   if(nombre === '' || monto === '') {
-    alert('Ambos campos son obligatorios');
+    msgAlerta('Ambos campos son obligatorios.');
     return;
   } else if(monto <= 0 || isNaN(monto)) {
-    alert('El monto ingresado es inválido. Por favor, ingrese un valor numérico.');
+    msgAlerta('El monto ingresado es inválido. Por favor, ingrese un valor numérico.');
     return;
   }
   
@@ -52,7 +75,7 @@ form.addEventListener('submit', e => {
       total += monto
       
       if (total > presupuesto) {
-        alert('Presupuesto excedido')
+        msgAlerta('Presupuesto excedido.')
         gastado.pop() // elimina último gasto (si se excede)
         total -= monto;
         return; // exit the loop
@@ -69,13 +92,27 @@ form.addEventListener('submit', e => {
     gastado.forEach(gasto => {
       const nuevoGasto = document.createElement('li');
       nuevoGasto.className = 'list-group-item d-flex align-items-center';
-      nuevoGasto.innerHTML = `${gasto.nombre} - $${gasto.monto}`;
+      nuevoGasto.innerHTML = `Nombre: ${gasto.nombre} <br> Cantidad: $${gasto.monto}`;
       lista.appendChild(nuevoGasto)
+    });
+
+    // limpiar html
+    const reset = document.querySelector('.btn-reset')
+    reset.addEventListener('click', e => {
+      e.preventDefault()
+      lista.innerHTML = '';
+      total = 0;
+      totalGastado.innerHTML = `${total}`;
+      presupuestoRestante.innerHTML = `${presupuesto}`;
+      localStorage.clear()
     });
   }
 
+  localStorage.setItem(nombre, monto);
+
   limpiarForm()
   listaGastos()
+
   const totalGastado = document.getElementById('total')
   totalGastado.innerHTML = `${total}`;
 
@@ -91,3 +128,18 @@ form.addEventListener('submit', e => {
   const presupuestoRestante = document.getElementById('restante');
   presupuestoRestante.innerHTML = `${restante}`;
 });
+
+// mensaje de alerta
+function msgAlerta(mensaje) {
+  const msg = document.createElement('p')
+  msg.classList.add('text-end', 'text-danger')
+  msg.textContent = mensaje;
+
+  document.querySelector('.btn').insertAdjacentElement("beforebegin", msg)
+
+  setTimeout(() => {
+    msg.remove()
+  }, 3000);
+}
+
+localStorage.clear()
